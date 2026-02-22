@@ -25,18 +25,6 @@ Le backend utilise **MySQL via Docker Compose** et expose une API REST.
 
 ---
 
-# 📁 Structure du projet
-Crud-Spring-React/
-│
-├── backend/
-│ ├── src/
-│ ├── pom.xml
-│ ├── docker-compose.yml
-│ └── .env (NON commité)
-│
-├── frontend/ (à venir)
-│
-└── README.md
 
 # 🚀 Lancer le projet
 
