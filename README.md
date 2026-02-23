@@ -1,29 +1,29 @@
-# 🚀 Crud Spring React
+# 🚀 CRUD Spring React
 
 Monorepo **Full-Stack** contenant :
 
 - `backend/` → API REST Spring Boot (Java 17)
-- `frontend/` → Application React (Vite + MUI + Axios)
+- `frontend/` → Application React (Vite + Material UI + Axios)
 
 Application de gestion complète avec :
 
 - Customers  
 - Products  
-- Orders (avec items et gestion de status)
+- Orders (avec items et gestion de statut)
 
 ---
 
-## 📦 Stack Technique
+# 📦 Stack Technique
 
-### 🖥 Backend
+## 🖥 Backend
 - Java 17  
 - Spring Boot 3  
 - Spring Data JPA  
 - Jakarta Validation  
 - MySQL 8  
-- Docker Compose  
+- Docker & Docker Compose  
 
-### 🌐 Frontend
+## 🌐 Frontend
 - React (Vite)  
 - Material UI (MUI)  
 - Axios  
@@ -31,26 +31,15 @@ Application de gestion complète avec :
 
 ---
 
+# 🏗 Architecture
 
 ---
 
-## 🚀 Lancer le projet en local
+# 🚀 Lancer le projet (Full Docker – recommandé)
 
-### 1️⃣ Lancer MySQL
+## 1️⃣ Lancer toute l’infrastructure
+
+Depuis la racine du projet :
 
 ```bash
-cd backend
-docker compose up -d
-docker compose ps
-
-### Lancer le Backend
-
-./mvnw spring-boot:run
-
-### Lancer le Frontend
-
-cd frontend
-npm install
-npm run dev
-
-## 🏗 Architecture
+docker compose up --build -d
