@@ -2,7 +2,7 @@ import { http } from "./http";
 
 export async function listCustomers() {
   const res = await http.get("/api/customers");
-  return res.data;
+  return Array.isArray(res.data) ? res.data : (res.data?.content ?? []);
 }
 
 export async function getCustomer(id) {
