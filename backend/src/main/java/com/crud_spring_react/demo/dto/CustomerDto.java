@@ -28,8 +28,6 @@ public class CustomerDto {
     )
     private String email;
 
-    private List<Long> orderIds;
-
     public CustomerDto() {}
 
     public Long getId() {
@@ -56,11 +54,4 @@ public class CustomerDto {
         this.email = email;
     }
 
-    public List<Long> getOrderIds() {
-        return orderIds;
-    }
-
-    public void setOrderIds(List<Long> orderIds) {
-        this.orderIds = orderIds;
-    }
 }

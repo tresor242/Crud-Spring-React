@@ -39,7 +39,6 @@ class CustomerServiceImplTest {
 
         assertEquals(2, res.size());
         assertEquals(1L, res.get(0).getId());
-        assertEquals(List.of(10L), res.get(0).getOrderIds());
         assertEquals(2L, res.get(1).getId());
 
         verify(customerRepository).findAll();

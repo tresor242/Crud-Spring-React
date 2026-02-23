@@ -100,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
             item.setOrder(order);
             item.setProduct(product);
             item.setQuantity(i.getQuantity());
-            item.setUnitPrice(product.getPrice()); // snapshot au moment de l'achat
+            item.setUnitPrice(product.getPrice());
 
             order.getItems().add(item);
         }

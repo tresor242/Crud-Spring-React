@@ -81,10 +81,6 @@ public class CustomerServiceImpl implements CustomerService {
         dto.setId(c.getId());
         dto.setFullName(c.getFullName());
         dto.setEmail(c.getEmail());
-        dto.setOrderIds(
-                c.getOrders() == null ? List.of() :
-                        c.getOrders().stream().map(o -> o.getId()).toList()
-        );
         return dto;
     }
 }

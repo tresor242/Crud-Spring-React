@@ -4,6 +4,7 @@ import com.crud_spring_react.demo.dto.CreateOrderRequest;
 import com.crud_spring_react.demo.dto.OrderDto;
 import com.crud_spring_react.demo.dto.UpdateOrderStatusRequest;
 import com.crud_spring_react.demo.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,12 +37,12 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto create(@RequestBody CreateOrderRequest request) {
+    public OrderDto create(@Valid @RequestBody CreateOrderRequest request) {
         return orderService.create(request);
     }
 
     @PatchMapping("/{id}/status")
-    public OrderDto updateStatus(@PathVariable Long id, @RequestBody UpdateOrderStatusRequest request) {
+    public OrderDto updateStatus(@PathVariable Long id, @Valid @RequestBody UpdateOrderStatusRequest request) {
         return orderService.updateStatus(id, request.getStatus());
     }
 
