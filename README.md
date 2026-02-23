@@ -1,40 +1,56 @@
-# Crud Spring React
+# 🚀 Crud Spring React
 
-Monorepo contenant :
+Monorepo **Full-Stack** contenant :
 
 - `backend/` → API REST Spring Boot (Java 17)
-- `frontend/` → Application React (à venir)
+- `frontend/` → Application React (Vite + MUI + Axios)
 
-Le backend utilise **MySQL via Docker Compose** et expose une API REST.
+Application de gestion complète avec :
 
----
-
-# 📦 Stack Technique
-
-## Backend
-- Java 17
-- Spring Boot
-- Spring Data JPA
-- MySQL 8
-- Docker Compose
-- phpMyAdmin
-
-## Frontend (à venir)
-- React
-- Axios
+- Customers  
+- Products  
+- Orders (avec items et gestion de status)
 
 ---
 
+## 📦 Stack Technique
 
-# 🚀 Lancer le projet
+### 🖥 Backend
+- Java 17  
+- Spring Boot 3  
+- Spring Data JPA  
+- Jakarta Validation  
+- MySQL 8  
+- Docker Compose  
 
-## 🐳 1️⃣ Lancer MySQL avec Docker
+### 🌐 Frontend
+- React (Vite)  
+- Material UI (MUI)  
+- Axios  
+- React Router  
 
-Depuis la racine du projet :
+---
+
+
+---
+
+## 🚀 Lancer le projet en local
+
+### 1️⃣ Lancer MySQL
 
 ```bash
 cd backend
 docker compose up -d
-
-#Vérifier
 docker compose ps
+
+### Lancer le Backend
+
+./mvnw spring-boot:run
+
+### Lancer le Frontend
+
+cd frontend
+npm install
+npm run dev
+
+## 🏗 Architecture
