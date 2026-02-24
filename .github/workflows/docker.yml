@@ -1,4 +1,4 @@
-name: Build and Push Docker Images
+name: Build, Push & Deploy (SHA)
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  build-push-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +22,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # --- Build & Push backend ---
       - name: Backend meta
         id: backend_meta
         uses: docker/metadata-action@v5
@@ -40,6 +41,7 @@ jobs:
           tags: ${{ steps.backend_meta.outputs.tags }}
           labels: ${{ steps.backend_meta.outputs.labels }}
 
+      # --- Build & Push frontend ---
       - name: Frontend meta
         id: frontend_meta
         uses: docker/metadata-action@v5
@@ -57,3 +59,34 @@ jobs:
           push: true
           tags: ${{ steps.frontend_meta.outputs.tags }}
           labels: ${{ steps.frontend_meta.outputs.labels }}
+
+      # --- Deploy tag
+      - name: Set deploy tag (sha-xxxxxxx)
+        run: echo "IMAGE_TAG=sha-${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Deploy on VPS (SSH)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            set -e
+            cd /opt/crud-app
+
+            # Update IMAGE_TAG in .env (create if missing)
+            if [ -f .env ]; then
+              if grep -q "^IMAGE_TAG=" .env; then
+                sed -i "s/^IMAGE_TAG=.*/IMAGE_TAG=${{ env.IMAGE_TAG }}/" .env
+              else
+                echo "IMAGE_TAG=${{ env.IMAGE_TAG }}" >> .env
+              fi
+            else
+              echo "IMAGE_TAG=${{ env.IMAGE_TAG }}" > .env
+            fi
+
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml up -d
+
+            docker image prune -f
