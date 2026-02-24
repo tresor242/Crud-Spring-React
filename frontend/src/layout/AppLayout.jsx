@@ -39,7 +39,7 @@ export default function AppLayout() {
         }}
       >
         <Box sx={{ px: 1, py: 1.5 }}>
-          <Typography variant="h6">Dashboard</Typography>
+          <Typography variant="h6">Dashboard Admin</Typography>
           <Typography variant="body2" sx={{ opacity: 0.7 }}>
             Made by TRESOR ELILA with React, MUI, Axios. {/* <3 */}
           </Typography>
