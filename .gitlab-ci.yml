@@ -1,0 +1,59 @@
+stages:
+  - test
+  - build
+  - push
+  - deploy
+
+variables:
+  BACKEND_IMAGE: "tresor242/backendcrudspringbootreact"
+  FRONTEND_IMAGE: "tresor242/frontendcrudspringbootreact"
+
+test_backend:
+  stage: test
+  tags:
+    - shell
+  script:
+    - cd backend
+    - chmod +x mvnw
+    - ./mvnw test
+
+build_frontend_assets:
+  stage: build
+  tags:
+    - shell
+  script:
+    - cd frontend
+    - npm install
+    - npm run build
+
+build_backend_image:
+  stage: build
+  tags:
+    - shell
+  script:
+    - docker build -t $BACKEND_IMAGE:latest -f backend/Dockerfile backend
+
+build_frontend_image:
+  stage: build
+  tags:
+    - shell
+  script:
+    - docker build -t $FRONTEND_IMAGE:latest -f frontend/Dockerfile frontend
+
+push_images:
+  stage: push
+  tags:
+    - shell
+  script:
+    - echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    - docker push $BACKEND_IMAGE:latest
+    - docker push $FRONTEND_IMAGE:latest
+
+deploy_app:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - ssh $APP_SERVER_USER@$APP_SERVER_HOST "cd $APP_DEPLOY_PATH && docker compose -f docker-compose.prod.yml pull && docker compose -f docker-compose.prod.yml up -d"
+  only:
+    - main
